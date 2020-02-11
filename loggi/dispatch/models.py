@@ -1,8 +1,11 @@
 # coding: utf-8
 
+SAO_PAULO = 'São Paulo'
+BELO_HORIZONTE = 'Belo Horizonte'
+
 CITY_ENABLE = {
-    'São Paulo': True,
-    'Belo Horizonte': False
+    SAO_PAULO: True,
+    BELO_HORIZONTE: False
 }
 
 ORDER_ALLOCATING = 'allocating'
@@ -31,6 +34,9 @@ def check_feature_switch():
 
 
 class EditOrderWorkMemory(object):
+    def __init__(self, order):
+        self.order = order
+
     def can_be_cancelled(self):
         self.order.status = ORDER_STARTED
 
@@ -38,6 +44,7 @@ class EditOrderWorkMemory(object):
 class Order(object):
     def __init__(self, city, status):
         self.city = city
+        self.status = status
 
     def is_ongoing(self):
         return ONGOING_STATUS.get(self.status)
@@ -46,8 +53,7 @@ class Order(object):
 
         order = self
         is_feature_enabled = CITY_ENABLE.get(self.city)
-
-        return (order.status == 'allocating' or self.is_ongoing()) and is_feature_enabled
+        return (order.status == 'allocating' or self.is_ongoing() is True) and is_feature_enabled
 
     def can_edit_for_retail(self):
         handler = EditOrderWorkMemory(order=self)

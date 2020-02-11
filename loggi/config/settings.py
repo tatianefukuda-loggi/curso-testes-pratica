@@ -18,6 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCAL_APPS = [
     'cx',
     'base',
+    'dispatch',
 ]
 
 # Quick-start development settings - unsuitable for production
